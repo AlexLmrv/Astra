@@ -20,5 +20,6 @@
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-security:9.4.2.v20170220" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-webapp:9.4.2.v20170220" level="project" />
     <orderEntry type="library" name="Maven: org.eclipse.jetty:jetty-xml:9.4.2.v20170220" level="project" />
+    <orderEntry type="library" name="Maven: org.freemarker:freemarker:2.3.29" level="project" />
   </component>
 </module>
