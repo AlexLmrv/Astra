@@ -5,8 +5,29 @@
     </head>
     <body>
         <div>
+            <form method="post">
+                <input type="text" name="text" placeholder="Введите сообщение">
+                <input type="text" name="tag" placeholder="Тэг">
+                <button type="submit">Добавить</button>
+
+            </form>
+            <form method="post" action="filter">
+                <input type="text" name="filter">
+                <button type="submit">Найти</button>
+            </form>
+        </div>
+        <div>
             <p>
-                {{hello}}
+                Список сообщений:
+            </p>
+            <p>
+                {{#messages}}
+                    <div>
+                        <b>{{id}}</b>
+                        <span>{{text}}</span>
+                        <i>{{tag}}</i>
+                    </div>
+                    {{/messages}}
             </p>
         </div>
     </body>
