@@ -17,7 +17,7 @@ public class User implements UserDetails {
     private String email;
     private boolean active;
 
-    /* формируем таблицу для хранения enum, подгружаем жадным способом, так как мало типов ролей
+    /* формируем таблицу для хранения enum ролей, подгружаем жадным способом, так как мало типов ролей
     * данное поле храниться будет в user_role, соединяющейся с текущей через user_id*/
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
