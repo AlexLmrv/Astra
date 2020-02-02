@@ -30,6 +30,6 @@ public class RegistrationController {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER)); //создаём сет с единственным значением
         userRepo.save(user); // сохраняем пользователя
-        return "redirect:/login";
+        return "redirect:/main";
     }
 }

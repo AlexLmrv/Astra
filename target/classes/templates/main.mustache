@@ -25,19 +25,34 @@
             </form>
         </div>
         <div>
-            <p>
-                Список сообщений:
-            </p>
-            <p>
-                {{#messages}}
-                    <div>
-                        <b>{{id}}</b>
-                        <span>{{text}}</span>
-                        <i>{{tag}}</i>
-                    </div>
-                    {{/messages}}
-            </p>
-        </div>
+        <p>
+            Список сообщений:
+        </p>
+    <p>
+        {{#messages}}
+            <div>
+                <b>{{id}}</b>
+                <span>{{text}}</span>
+                <i>{{tag}}</i>
+                <strong>{{authorName}}</strong>
+            </div>
+        {{/messages}}
+        </p>
+    </div>
+    <div>
+        <p>
+            Список пользователей:
+        </p>
+    <p>
+        {{#users}}
+            <div>
+                <b>{{id}}</b>
+                <span>{{username}}</span>
+                <i>{{password}}</i>
+                            </div>
+        {{/users}}
+        </p>
+    </div>
     </body>
 
 </html>

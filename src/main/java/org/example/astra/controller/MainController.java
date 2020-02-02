@@ -1,8 +1,11 @@
 package org.example.astra.controller;
 
 import org.example.astra.domain.Message;
+import org.example.astra.domain.User;
 import org.example.astra.repos.MessageRepo;
+import org.example.astra.repos.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +18,7 @@ import java.util.Map;
 @Controller
 public class MainController {
     @Autowired MessageRepo messageRepo;
+    @Autowired UserRepo userRepo;
 
     @GetMapping("/")
     public String greeting(Map<String, Object> model) {
@@ -30,12 +34,19 @@ public class MainController {
     }
 
     @PostMapping("/main")
-    public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model){
-        Message message = new Message(text, tag);
+    public String add(
+            @AuthenticationPrincipal User user,
+            @RequestParam String text,
+            @RequestParam String tag,
+            Map<String, Object> model){
+        Message message = new Message(text, tag, user);
         messageRepo.save(message);
 
         Iterable<Message> messages = messageRepo.findAll();
         model.put("messages", messages);
+
+        Iterable<User> users = userRepo.findAll();
+        model.put("users", users);
 
         return "main";
     }
