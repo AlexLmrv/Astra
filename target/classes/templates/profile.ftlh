@@ -4,18 +4,18 @@
 
 
     <div>
-       {{#user}}
+
        <p>
-           ID: {{id}}
+           ID: ${user.id}
        </p>
            <p>
-               Name: {{username}}
+               Name: ${user.username}
            </p>
            <p>
-               password: {{password}}
+               password: ${user.password}
            </p>
 
-       {{/user}}
+
     </div>
 
 
