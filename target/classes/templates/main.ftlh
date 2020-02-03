@@ -6,7 +6,7 @@
     <@log.logout />
 
     <div>
-        <form method="post" >   
+        <form method="post" >
             <input type="text" name="text" placeholder="Введите сообщение">
             <input type="text" name="tag" placeholder="Тэг">
             <input type="hidden" name="_csrf" value="${_csrf.token}" />
@@ -14,7 +14,7 @@
 
         </form>
         <form method="get" action="/main">
-            <input type="text" name="filter" value=""> <!-- //value="${filter}" не грузится! -->
+            <input type="text" name="filter" value="${filter}"> <!-- //value="${filter}" не грузится! -->
             <button type="submit">Найти</button>
         </form>
     </div>

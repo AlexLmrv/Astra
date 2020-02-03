@@ -14,7 +14,7 @@
 
         </form>
         <form method="get" action="/main">
-            <input type="text" name="filter" value=""> <!-- //value="${filter}" не грузится! -->
+            <input type="text" name="filter" value="${filter}"> <!-- //value="${filter}" не грузится! -->
             <button type="submit">Найти</button>
         </form>
     </div>
