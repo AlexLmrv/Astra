@@ -3,13 +3,9 @@
 
 <@comm.page>
     <p>
-        Залогиньтесь или зарегистрируйтесть
+        Залогиньтесь или зарегистрируйтесь
     </p>
 
-    <@log.login "/login" />
-
-
-
-<a href="/registration">Зарегистрироваться</a>
+    <@log.login "/login" false/>
 
 </@comm.page>
