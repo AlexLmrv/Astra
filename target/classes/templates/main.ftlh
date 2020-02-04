@@ -19,20 +19,24 @@
         </form>
     </div>
 
-        <p>
-            Список сообщений:
-        </p>
+    <p>
+        <a href="/user">Список пользователей</a>
+    </p>
 
-            <#list messages as message>
-                <div>
-                    <b>${message.id}</b>
-                    <span>${message.text}</span>
-                    <i>${message.tag}</i>
-                    <strong>${message.authorName}</strong>
-                </div>
-            <#else >
-                No messages
-            </#list>
+    <p>
+        Список сообщений:
+    </p>
+
+    <#list messages as message>
+        <div>
+            <b>${message.id}</b>
+            <span>${message.text}</span>
+            <i>${message.tag}</i>
+            <strong>${message.authorName}</strong>
+        </div>
+    <#else >
+        No messages
+    </#list>
 
 
     <div>
