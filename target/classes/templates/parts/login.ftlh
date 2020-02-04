@@ -1,17 +1,28 @@
-<#macro login path>
+<#macro login path isRegisterForm>
 
     <form action="${path}" method="post">
-        <div><label> User Name : <input type="text" name="username"/> </label></div>
-        <div><label> Password: <input type="password" name="password"/> </label></div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Имя пользователя:</label>
+            <div class="col-sm-6">
+                <input type="text" class="form-control" name="username" placeholder="Login"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label"> Пароль:</label>
+            <div class="col-sm-6">
+                <input type="password" class="form-control" name="password" placeholder="password"/>
+            </div>
+        </div>
         <input type="hidden" name="_csrf" value="${_csrf.token}" />
-        <div><input type="submit" value="Sign In"/></div>
+        <#if !isRegisterForm><a href="/registration">Зарегистрироваться</a></#if>
+        <button type="submit" class="btn btn-primary">Войти</button>
     </form>
 
 </#macro>
 
 <#macro logout>
     <form action="/logout" method="post">
-        <input type="submit" value="Sign Out"/>
+        <button type="submit" class="btn btn-primary m-3">Выйти</button>
         <input type="hidden" name="_csrf" value="${_csrf.token}" />
 
     </form>

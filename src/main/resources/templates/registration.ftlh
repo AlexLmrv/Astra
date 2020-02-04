@@ -2,7 +2,7 @@
 <#import "parts/login.ftlh" as log>
 
 <@comm.page>
-    <@log.login "/registration" />
+    <@log.login "/registration" true/>
 
     ${message}
-</@comm.page>
+ </@comm.page>
