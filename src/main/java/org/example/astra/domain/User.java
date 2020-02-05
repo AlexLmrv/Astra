@@ -15,6 +15,7 @@ public class User implements UserDetails {
     private String username;
     private String password;
     private String email;
+    private String activationCode;
     private boolean active;
 
     /* формируем таблицу для хранения enum ролей, подгружаем жадным способом, так как мало типов ролей
@@ -99,5 +100,11 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public String getActivationCode() {
+        return activationCode;
+    }
 
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
 }
