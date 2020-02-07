@@ -36,9 +36,7 @@
         </div>
     </div>
 
-    <p>
-        <a href="/user">Список пользователей</a>
-    </p>
+
 
     <div class="card-columns">
     <#list messages as message>
@@ -64,18 +62,5 @@
     </div>
 
 
-    <div>
-        <p>
-            Список пользователей:
-        </p>
-        <p>
-            <#list users as user>
-        <div>
-            <b>${user.id}</b>
-            <span>${user.username}</span>
-            <i>${user.password}</i>
-        </div>
-        </#list>
-        </p>
-    </div>
+
 </@comm.page>

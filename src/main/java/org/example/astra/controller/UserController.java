@@ -2,29 +2,26 @@ package org.example.astra.controller;
 
 import org.example.astra.domain.Role;
 import org.example.astra.domain.User;
-import org.example.astra.repos.UserRepo;
+import org.example.astra.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/user")
 @PreAuthorize("hasAuthority('ADMIN')")
 public class UserController {
     @Autowired
-    private UserRepo userRepo;
+    private UserService userService;
 
     @GetMapping
     public String userList(Model model){
 
-        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("users", userService.findAll());
 
         return "userList";
     }
@@ -42,23 +39,7 @@ public class UserController {
             @RequestParam Map<String , String > form ,
             @RequestParam String username){
 
-        user.setUsername(username);  // устанавливаем имя пользователя
-
-        //запрашиваем роли пользователя и переводим их из енама в сет
-        Set<String> roles = Arrays.stream(Role.values())
-                .map(Role::name)
-                .collect(Collectors.toSet());
-
-        user.getRoles().clear(); // предварительно очищаем роли пользователя
-        //получаем список ролей из формы и итерируем по нему
-        for (String key : form.keySet()) {
-            //т.к. в форме есть и иные поля, проверяем их на соответствие с ролями
-            if (roles.contains(key)){
-                user.getRoles().add(Role.valueOf(key));
-            }
-        }
-
-        userRepo.save(user);
+        userService.saveUser(user, username, form);
 
         return "redirect:/user";
     }
