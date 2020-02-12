@@ -4,6 +4,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.*;
 
 @Entity
@@ -12,8 +14,15 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+    @NotBlank(message = "Введите имя пользователя:")
     private String username;
+    @NotBlank(message = "Введите пароль:")
     private String password;
+    @Transient //не получаем и не сохраняем его в бд
+    @NotBlank(message = "Введите подтверждение пароля:")
+    private String passwordConf;
+    @NotBlank(message = "Введите email:")
+    @Email(message = "Некорретный адрес ")
     private String email;
     private String activationCode;
     private boolean active;
@@ -106,5 +115,13 @@ public class User implements UserDetails {
 
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
+    }
+
+    public String getPasswordConf() {
+        return passwordConf;
+    }
+
+    public void setPasswordConf(String passwordConf) {
+        this.passwordConf = passwordConf;
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -20,6 +21,9 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private MailSender mailSender;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 
     @Override
@@ -39,7 +43,10 @@ public class UserService implements UserDetailsService {
         user.setActive(true);
         user.setRoles(Collections.singleton(Role.USER)); //создаём сет с единственным значением
         user.setActivationCode(UUID.randomUUID().toString()); //генерим проверочный код, с которым перейдёт по ссылке
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+
         userRepo.save(user); // сохраняем пользователя
+
 
         sendActivateMessage(user);
 
