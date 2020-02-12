@@ -84,6 +84,12 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
 
+        <!--сохранение сессий в бд -->
+        <dependency>
+            <groupId>org.springframework.session</groupId>
+            <artifactId>spring-session-jdbc</artifactId>
+        </dependency>
+
     </dependencies>
 
 

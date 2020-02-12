@@ -14,6 +14,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -31,6 +32,9 @@ public class MainController {
 
     @Value("${upload.path}")   // берёт значения из properties
     private String uploadPath;
+    @Autowired
+    private RestTemplate restTemplate;
+
 
     @GetMapping("/")
     public String greeting(Map<String, Object> model) {

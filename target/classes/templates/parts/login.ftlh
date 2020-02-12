@@ -1,23 +1,3 @@
-Skip to content
-Search or jump to…
-
-Pull requests
-Issues
-Marketplace
-Explore
-
-@AlexLmrv
-drucoder
-/
-sweater
-24
-10860
-Code Issues 0 Pull requests 0 Actions Projects 0 Wiki Security Insights
-sweater/src/main/resources/templates/parts/login.ftl
-@drucoder drucoder Password encoding. Bean validation
-e651076 on May 19, 2018
-68 lines (67 sloc)  2.68 KB
-
 <#macro login path isRegisterForm>
     <form action="${path}" method="post">
         <div class="form-group row">
@@ -72,6 +52,14 @@ e651076 on May 19, 2018
                         </div>
                     </#if>
                 </div>
+            </div>
+            <div class="col-sm-6">
+            <div class="g-recaptcha" data-sitekey="6LcyKdgUAAAAALNJUOdF7iwogEZCoetaCQzHqqMs"></div>
+            <#if captchaError??>
+                <div class="alert" role="alert">
+                    ${captchaError}
+                </div>
+            </#if>
             </div>
         </#if>
         <input type="hidden" name="_csrf" value="${_csrf.token}" />
