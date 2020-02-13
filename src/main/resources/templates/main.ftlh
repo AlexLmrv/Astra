@@ -43,7 +43,7 @@
         </div>
     </div>
 
-<#include "parts/messageEdit.ftlh" />
+
 
     <div class="card-columns">
     <#list messages as message>
