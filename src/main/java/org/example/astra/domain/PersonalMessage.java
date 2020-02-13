@@ -5,38 +5,36 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
+
 @Entity
-public class Message {
+@Table(name = "personal_messages")
+public class PersonalMessage {
 
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @NotBlank(message = "Сперва введите сообщение:")
     @Length(max = 2048, message = "Сообщение слишком длинное")
     private String text;
-    private String tag;
+
 
     @ManyToOne(fetch = FetchType.EAGER) //здесь мы указываем, что многие сообщения могут соответствовать одному автору.
     // получая сообщение, сразу подтягиваем информацию об авторе
     @JoinColumn(name = "user_id")
     private User author;
 
+    private String dialogname;
+
     private String filename;
 
-    public Message() {
+    public PersonalMessage() {
     }
 
-    public Message(String text, String tag, User author) {
+    public PersonalMessage(String text, User author) {
         this.author = author;
         this.text = text;
-        this.tag = tag;
-
-    }
-
-    public String getAuthorName(){
-        return author != null ? author.getUsername() : "<none>";
     }
 
     public Long getId() {
@@ -55,20 +53,20 @@ public class Message {
         this.text = text;
     }
 
-    public String getTag() {
-        return tag;
-    }
-
-    public void setTag(String tag) {
-        this.tag = tag;
-    }
-
     public User getAuthor() {
         return author;
     }
 
     public void setAuthor(User author) {
         this.author = author;
+    }
+
+    public String getDialogname() {
+        return dialogname;
+    }
+
+    public void setDialogname(String dialogname) {
+        this.dialogname = dialogname;
     }
 
     public String getFilename() {

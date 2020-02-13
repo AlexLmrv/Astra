@@ -12,7 +12,7 @@ import java.util.*;
 @Table(name = "usr")
 public class User implements UserDetails {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NotBlank(message = "Введите имя пользователя:")
     private String username;
@@ -26,19 +26,21 @@ public class User implements UserDetails {
     private boolean active;
 
     /* формируем таблицу для хранения enum ролей, подгружаем жадным способом, так как мало типов ролей
-    * данное поле храниться будет в user_role, соединяющейся с текущей через user_id*/
+     * данное поле храниться будет в user_role, соединяющейся с текущей через user_id*/
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    public boolean isAdmin(){
+
+    public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
     }
 
     public Long getId() {
         return id;
     }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -74,6 +76,7 @@ public class User implements UserDetails {
     public String getEmail() {
         return email;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -114,6 +117,5 @@ public class User implements UserDetails {
     public void setActivationCode(String activationCode) {
         this.activationCode = activationCode;
     }
-
 
 }
