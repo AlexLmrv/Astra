@@ -9,6 +9,16 @@ create table message (
                          primary key (id)
 );
 
+create table personal_messages (
+    id int8 not null,
+    datetime varchar(255),
+    dialogname varchar(255),
+    filename varchar(255),
+    text varchar(2048),
+    user_id int8,
+    primary key (id)
+                               );
+
 create table user_role (
                            user_id int8 not null,
                            roles varchar(255)
@@ -26,6 +36,10 @@ create table usr (
 
 alter table if exists message
     add constraint message_user_fk
+        foreign key (user_id) references usr;
+
+alter table if exists personal_messages
+    add constraint personal_messages_fk
         foreign key (user_id) references usr;
 
 alter table if exists user_role
