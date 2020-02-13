@@ -13,7 +13,10 @@
                 <a class="nav-link" href="/">Home </a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/main">Сообщения </a>
+                <a class="nav-link" href="/main">Блог</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/dialogs">Диалоги</a>
             </li>
             <#if isAdmin>
                 <li class="nav-item active">

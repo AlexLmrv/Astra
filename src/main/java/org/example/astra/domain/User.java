@@ -23,6 +23,7 @@ public class User implements UserDetails {
     @Email(message = "Некорретный адрес ")
     private String email;
     private String activationCode;
+    private String avatarpath;
     private boolean active;
 
     /* формируем таблицу для хранения enum ролей, подгружаем жадным способом, так как мало типов ролей
@@ -115,5 +116,11 @@ public class User implements UserDetails {
         this.activationCode = activationCode;
     }
 
+    public String getAvatarpath() {
+        return avatarpath;
+    }
 
+    public void setAvatarpath(String avatarpath) {
+        this.avatarpath = avatarpath;
+    }
 }
