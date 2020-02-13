@@ -1,6 +1,7 @@
 package org.example.astra.controller;
 
 
+import org.example.astra.domain.PersonalMessage;
 import org.example.astra.domain.User;
 import org.example.astra.repos.PersonalMessageRepo;
 import org.example.astra.repos.UserRepo;
@@ -11,9 +12,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/dialogs")
@@ -45,10 +46,20 @@ public class PersonalMessageController {
             @PathVariable User user,
             Model model){
         model.addAttribute("messages", personalMessageService.getMessages(userFrom, user));
+        model.addAttribute("userTo", user);
+
 
         return "dialogPage";
 
     }
+/*
+    @PostMapping("{user}")
+    public String sendmessage(
+            @AuthenticationPrincipal User userFrom,
+            @Valid PersonalMessage personalMessage,
+            @PathVariable String userTo){
+        personalMessageService.sendMessage(userFrom, userRepo.findByUsername(userTo), personalMessage);
 
-
+    }
+*/
 }

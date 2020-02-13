@@ -41,17 +41,10 @@ public class ProfileController {
             @AuthenticationPrincipal User user,
             @RequestParam String password,
             @RequestParam String email,
-            @RequestParam("file") MultipartFile file,
-            BindingResult bindingResult,
-            Model model
+            @RequestParam("file") MultipartFile file
+
     ) throws IOException {
 
-        if (bindingResult.hasErrors()){
-            Map<String, String> errorMap = ControllerUtils.getErrors(bindingResult);
-            model.mergeAttributes(errorMap);
-        }
-
-        else{
 
             if(file != null && !file.getOriginalFilename().isEmpty()){
                 File uploadDir = new File(uploadPath);
@@ -68,7 +61,7 @@ public class ProfileController {
             }
 
 
-        }
+
 
         userService.updateProfile(user, password, email);
         return "redirect:/profile";

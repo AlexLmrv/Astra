@@ -15,7 +15,7 @@
 
     </div>
 
-    <form method="post">
+    <form method="post" enctype="multipart/form-data" >
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"> Пароль:</label>
             <div class="col-sm-6">
@@ -26,6 +26,12 @@
             <label class="col-sm-2 col-form-label"> Email:</label>
             <div class="col-sm-6">
                 <input type="email" class="form-control" name="email" placeholder="Email" value="${user.email!''}"/>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="custom-file">
+                <input type="file" name="file" id="customFile">
+                <label class="custom-file-label" for="customFile">Добавить аватар</label>
             </div>
         </div>
 
