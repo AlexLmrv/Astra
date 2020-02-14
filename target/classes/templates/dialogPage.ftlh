@@ -3,7 +3,7 @@
 
 <@comm.page>
 <!--
-    <div>Отладочная строка  <#if user.avatarpath??>
+    <div>Отладочная строка  <#if userTo.avatarpath??>
             <img class="userlist__user_avatar" src="/img/${userTo.avatarpath}">
         <#else>
             <img class="userlist__user_avatar" src="https://artifactcards.ru/img/forum/avatars/default/avatar_l.png">

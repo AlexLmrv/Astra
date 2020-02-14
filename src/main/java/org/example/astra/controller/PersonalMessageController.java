@@ -40,13 +40,13 @@ public class PersonalMessageController {
         /*здесь просто возвращаем список пользователей, которым можно написать сообщение*/
     }
 
-    @GetMapping("{user}")
+    @GetMapping("{userTo}")
     public String dialog(
             @AuthenticationPrincipal User userFrom,
-            @PathVariable User user,
+            @PathVariable User userTo,
             Model model){
-        model.addAttribute("messages", personalMessageService.getMessages(userFrom, user));
-        model.addAttribute("userTo", user);
+        model.addAttribute("messages", personalMessageService.getMessages(userFrom, userTo));
+        model.addAttribute("userTo", userTo);
 
 
         return "dialogPage";
@@ -68,7 +68,8 @@ public class PersonalMessageController {
         model.addAttribute("userTo", userTo);
         model.addAttribute("user", userFrom);
 
-        return "dialogPage";
+        //return "dialogPage";
+        return "redirect:/dialogs/{userTo}";
     }
 
 }
