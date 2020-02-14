@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +37,7 @@ public class PersonalMessageService {
         personalMessageRepo.save(personalMessage);
     }
 
-    public Iterable<PersonalMessage> getMessages(User userFrom, User userTo){
+    public List<PersonalMessage> getMessages(User userFrom, User userTo){
 
         String currentDialogname;
 
@@ -48,8 +49,9 @@ public class PersonalMessageService {
         }
 
 
-
-        return personalMessageRepo.findByDialogname(currentDialogname);
+        List<PersonalMessage> resultMessages = personalMessageRepo.findByDialogname(currentDialogname);
+        Collections.reverse(resultMessages);
+        return resultMessages;
     }
 
 

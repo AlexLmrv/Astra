@@ -15,6 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Collections;
+import java.util.List;
 
 @Controller
 @RequestMapping("/dialogs")
@@ -45,8 +47,9 @@ public class PersonalMessageController {
             @AuthenticationPrincipal User userFrom,
             @PathVariable User userTo,
             Model model){
-        model.addAttribute("messages", personalMessageService.getMessages(userFrom, userTo));
+        model.addAttribute("messages",personalMessageService.getMessages(userFrom, userTo));
         model.addAttribute("userTo", userTo);
+        model.addAttribute("users", userService.findAll());
 
 
         return "dialogPage";
@@ -67,6 +70,7 @@ public class PersonalMessageController {
         model.addAttribute("messages", personalMessageService.getMessages(userFrom, userTo));
         model.addAttribute("userTo", userTo);
         model.addAttribute("user", userFrom);
+        model.addAttribute("users", userService.findAll());
 
         //return "dialogPage";
         return "redirect:/dialogs/{userTo}";
