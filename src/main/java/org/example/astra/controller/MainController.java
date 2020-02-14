@@ -52,9 +52,6 @@ public class MainController {
             messages = messageRepo.findAll();
         }
 
-        Iterable<User> users = userRepo.findAll();
-        model.addAttribute("users", users);
-
         model.addAttribute("messages", messages);
         model.addAttribute("filter", filter);
         return "main";

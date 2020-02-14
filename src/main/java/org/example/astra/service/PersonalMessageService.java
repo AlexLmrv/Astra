@@ -36,7 +36,7 @@ public class PersonalMessageService {
         personalMessageRepo.save(personalMessage);
     }
 
-    public List<PersonalMessage> getMessages(User userFrom, User userTo){
+    public Iterable<PersonalMessage> getMessages(User userFrom, User userTo){
 
         String currentDialogname;
 

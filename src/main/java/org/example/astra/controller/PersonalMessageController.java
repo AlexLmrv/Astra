@@ -66,6 +66,7 @@ public class PersonalMessageController {
         //и обратно возвращаем инфу
         model.addAttribute("messages", personalMessageService.getMessages(userFrom, userTo));
         model.addAttribute("userTo", userTo);
+        model.addAttribute("user", userFrom);
 
         return "dialogPage";
     }
