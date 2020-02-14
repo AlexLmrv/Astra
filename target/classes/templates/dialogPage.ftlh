@@ -16,7 +16,8 @@
 
     <div class="header"><#include "parts/navbar.ftlh"></div>
 
-    <div class="message-header"><#if userTo.avatarpath??>
+    <div class="message-header">
+        <#if userTo.avatarpath??>
             <img class="userlist__user_avatar" src="/img/${userTo.avatarpath}">
         <#else>
             <img class="userlist__user_avatar" src="https://artifactcards.ru/img/forum/avatars/default/avatar_l.png">
@@ -53,18 +54,24 @@
 
     <div class="content">
         <#list messages as message>
-                <div>
-                    <#if message.filename??>
-                        <img class="card-img-top" src="/img/${message.filename}">
-                    </#if>
-                </div>
-                <div>
+            <div class="message_container">
+                <div class="message_text">
                     <span>${message.text}</span>
+                </div>
+                <div class="message_author">
                     <i>${message.author.username}</i>
                 </div>
-                <div class="">
+                <div class="message_datetime">
                     ${message.datetime}
                 </div>
+                <div class="message_avatar">
+                    <#if message.author.avatarpath??>
+                        <img class="userlist__user_avatar" src="/img/${message.author.avatarpath}">
+                    <#else>
+                        <img class="userlist__user_avatar" src="https://artifactcards.ru/img/forum/avatars/default/avatar_l.png">
+                    </#if>
+                </div>
+            </div>
         <#else >
             No messages
         </#list>
@@ -73,7 +80,7 @@
 
     <div class="menu">
         <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action active">
+            <a href="/dialogs" class="list-group-item list-group-item-action active">
                 Диалоги</a>
             <#list users as user>
                 <a href="/dialogs/${user.id}" class="list-group-item list-group-item-action">
