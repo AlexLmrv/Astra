@@ -18,7 +18,7 @@
         <div class="form-group mt-3">
             <form method="post" enctype="multipart/form-data" >
                 <div class="form-group">
-                    <input type="text" name="text " placeholder="Введите сообщение" class="form-control ${(textError??)?string('is-invalid', '')}"
+                    <input type="text" name="text" placeholder="Введите сообщение" class="form-control ${(textError??)?string('is-invalid', '')}"
                     value="<#if message??>${message.text}</#if>">
                     <#if textError??>
                         <div class="invalid-feedback">

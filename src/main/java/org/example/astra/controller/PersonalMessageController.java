@@ -52,14 +52,22 @@ public class PersonalMessageController {
         return "dialogPage";
 
     }
-/*
-    @PostMapping("{user}")
+
+    @PostMapping("{userTo}")
     public String sendmessage(
             @AuthenticationPrincipal User userFrom,
             @Valid PersonalMessage personalMessage,
-            @PathVariable String userTo){
-        personalMessageService.sendMessage(userFrom, userRepo.findByUsername(userTo), personalMessage);
+            Model model,
+            @PathVariable User userTo,
+            @RequestParam String text){
+        //PersonalMessage personalMessage = new PersonalMessage(); //пока не нужно
+        personalMessage.setText(text);
+        personalMessageService.sendMessage(userFrom, userTo, personalMessage);
+        //и обратно возвращаем инфу
+        model.addAttribute("messages", personalMessageService.getMessages(userFrom, userTo));
+        model.addAttribute("userTo", userTo);
 
+        return "dialogPage";
     }
-*/
+
 }

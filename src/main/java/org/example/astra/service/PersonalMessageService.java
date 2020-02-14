@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonalMessageService {
@@ -28,7 +29,8 @@ public class PersonalMessageService {
         Date dateNow = new Date();
         SimpleDateFormat formatForDateNow = new SimpleDateFormat("'Отправлено 'E yyyy.MM.dd ' в ' hh:mm:ss a zzz");
 
-        personalMessage.setDatetime(formatForDateNow.toString());
+        personalMessage.setDatetime(formatForDateNow.format(dateNow));
+        personalMessage.setAuthor(userFrom);
 
 
         personalMessageRepo.save(personalMessage);
