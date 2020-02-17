@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Astra</title>
+    <title>Диалоги</title>
 
 
     <!-- Bootstrap CSS -->
@@ -41,9 +41,12 @@
                     <div class="custom-file">
                         <input type="file" name="file" id="customFile">
                         <label class="custom-file-label" for="customFile">Прикрепить изображение</label>
+
                     </div>
                 </div>
+
                 <input type="hidden" name="_csrf" value="${_csrf.token}" />
+
                 <button type="submit" class="btn btn-primary">Добавить</button>
 
             </form>
@@ -69,6 +72,20 @@
                         <img class="userlist__user_avatar" src="/img/${message.author.avatarpath}">
                     <#else>
                         <img class="userlist__user_avatar" src="https://artifactcards.ru/img/forum/avatars/default/avatar_l.png">
+                    </#if>
+                </div>
+                <div class="message_file">
+                    <#if message.filename??>
+                        <#if message.filename?contains(".jpg")
+                            || message.filename?contains(".jpeg")
+                            || message.filename?contains(".png")
+                            || message.filename?contains(".gif")
+                            || message.filename?contains(".bmp")>
+                            <img class="message_file__image" src="/img/${message.filename}">
+                        <#else>
+                            <a download="${message.filename[message.filename?index_of(".")+1..]}"
+                               href="/img/${message.filename}">Скачать ${message.filename[message.filename?index_of(".")+1..]}</a>
+                        </#if>
                     </#if>
                 </div>
             </div>

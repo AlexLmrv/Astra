@@ -13,8 +13,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
@@ -62,9 +64,11 @@ public class PersonalMessageController {
             @Valid PersonalMessage personalMessage,
             Model model,
             @PathVariable User userTo,
-            @RequestParam String text){
+            @RequestParam String text,
+            @RequestParam("file") MultipartFile file) throws IOException {
         //PersonalMessage personalMessage = new PersonalMessage(); //пока не нужно
         personalMessage.setText(text);
+        personalMessageService.sendFilename(personalMessage, file);
         personalMessageService.sendMessage(userFrom, userTo, personalMessage);
         //и обратно возвращаем инфу
         model.addAttribute("messages", personalMessageService.getMessages(userFrom, userTo));
@@ -72,7 +76,6 @@ public class PersonalMessageController {
         model.addAttribute("user", userFrom);
         model.addAttribute("users", userService.findAll());
 
-        //return "dialogPage";
         return "redirect:/dialogs/{userTo}";
     }
 
