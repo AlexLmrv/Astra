@@ -4,55 +4,37 @@ import org.example.astra.domain.Message;
 import org.example.astra.domain.User;
 import org.example.astra.repos.MessageRepo;
 import org.example.astra.repos.UserRepo;
+import org.example.astra.service.MainMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import java.io.File;
 import java.io.IOException;
 import java.util.Map;
-import java.util.UUID;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 @Controller
 public class MainController {
     @Autowired MessageRepo messageRepo;
     @Autowired UserRepo userRepo;
-
-    @Value("${upload.path}")   // берёт значения из properties
-    private String uploadPath;
-    @Autowired
-    private RestTemplate restTemplate;
+    @Autowired MainMessageService mainMessageService;
 
 
     @GetMapping("/")
-    public String greeting(Map<String, Object> model) {
+    public String greeting() {
         return "redirect:/main";
     }
 
     @GetMapping("/main")
     public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model){
-        Iterable<Message> messages = messageRepo.findAll();
 
-        if (filter != null && !filter.isEmpty() ) {
-            messages = messageRepo.findByTag(filter);
-        }
-        else {
-            messages = messageRepo.findAll();
-        }
-
-        model.addAttribute("messages", messages);
+        model.addAttribute("messages", mainMessageService.getMessages(filter));
         model.addAttribute("filter", filter);
         return "main";
     }
@@ -72,39 +54,15 @@ public class MainController {
             Map<String, String> errorMap = ControllerUtils.getErrors(bindingResult);
             model.mergeAttributes(errorMap);
             model.addAttribute("message", message);
-
         }
-
         else{
-
-            if(file != null && !file.getOriginalFilename().isEmpty()){
-                File uploadDir = new File(uploadPath);
-
-                if (!uploadDir.exists()){   //проверяем, существует ли uploadPath, если нет, то создаём
-                    uploadDir.mkdir();
-                }
-
-                String uuidFile = UUID.randomUUID().toString(); //генерим universe unique id
-                String resultFileName = uuidFile + "." + file.getOriginalFilename(); //конкатенируем с исходным названием
-
-                file.transferTo(new File(uploadPath + "/" + resultFileName));
-                message.setFilename(resultFileName); //и вот конечное имя файла
-            }
-
-            messageRepo.save(message);
+            mainMessageService.sendFilename(message, file);
+            mainMessageService.sendMessage(message);
         }
-        Iterable<User> users = userRepo.findAll();
-        model.addAttribute("users", users);
 
-
-        Iterable<Message> messages = messageRepo.findAll();
-        model.addAttribute("messages", messages);
-
+        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("messages", messageRepo.findAll());
         model.addAttribute("filter", filter);
-        message = null;
-
-
-
 
         return "redirect:/main";
     }

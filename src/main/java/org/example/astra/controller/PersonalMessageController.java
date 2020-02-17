@@ -8,7 +8,6 @@ import org.example.astra.repos.UserRepo;
 import org.example.astra.service.PersonalMessageService;
 import org.example.astra.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,8 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
 
 @Controller
 @RequestMapping("/dialogs")
@@ -32,9 +29,6 @@ public class PersonalMessageController {
     UserRepo userRepo;
     @Autowired
     UserService userService;
-    @Value("${upload.path}")
-    private String uploadPath;
-
 
 
     @GetMapping
