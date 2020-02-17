@@ -14,14 +14,21 @@
     <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
         Добавить сообщение
     </a>
-    <div class="collapse" id="collapseExample">
+    <div class="collapse <#if message??>show</#if>" id="collapseExample">
         <div class="form-group mt-3">
             <form method="post" enctype="multipart/form-data" >
                 <div class="form-group">
-                    <input type="text" name="text" placeholder="Введите сообщение" class="form-control">
+                    <input type="text" name="text" placeholder="Введите сообщение" class="form-control ${(textError??)?string('is-invalid', '')}"
+                    value="<#if message??>${message.text}</#if>">
+                    <#if textError??>
+                        <div class="invalid-feedback">
+                            Ошибка: ${textError}
+                        </div>
+                    </#if>
                 </div>
                 <div class="form-group">
-                    <input type="text" name="tag" placeholder="Тэг" class="form-control">
+                    <input type="text" name="tag" placeholder="Тэг" class="form-control ${(textError??)?string('is-invalid', '')}"
+                           value="<#if message??>${message.tag}</#if>">
                 </div>
                 <div class="form-group">
                     <div class="custom-file">
@@ -36,9 +43,7 @@
         </div>
     </div>
 
-    <p>
-        <a href="/user">Список пользователей</a>
-    </p>
+
 
     <div class="card-columns">
     <#list messages as message>
@@ -64,18 +69,5 @@
     </div>
 
 
-    <div>
-        <p>
-            Список пользователей:
-        </p>
-        <p>
-            <#list users as user>
-        <div>
-            <b>${user.id}</b>
-            <span>${user.username}</span>
-            <i>${user.password}</i>
-        </div>
-        </#list>
-        </p>
-    </div>
+
 </@comm.page>

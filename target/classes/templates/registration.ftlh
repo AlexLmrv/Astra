@@ -4,5 +4,5 @@
 <@comm.page>
     <@log.login "/registration" true/>
 
-    ${message}
+    ${message?ifExists}
  </@comm.page>

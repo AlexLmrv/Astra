@@ -4,6 +4,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import java.util.*;
 
 @Entity
@@ -12,9 +14,16 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
+    @NotBlank(message = "Введите имя пользователя:")
     private String username;
+    @NotBlank(message = "Введите пароль:")
     private String password;
+
+    @NotBlank(message = "Введите email:")
+    @Email(message = "Некорретный адрес ")
     private String email;
+    private String activationCode;
+    private String avatarpath;
     private boolean active;
 
     /* формируем таблицу для хранения enum ролей, подгружаем жадным способом, так как мало типов ролей
@@ -99,5 +108,19 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+    public String getActivationCode() {
+        return activationCode;
+    }
 
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
+    public String getAvatarpath() {
+        return avatarpath;
+    }
+
+    public void setAvatarpath(String avatarpath) {
+        this.avatarpath = avatarpath;
+    }
 }

@@ -4,50 +4,37 @@ import org.example.astra.domain.Message;
 import org.example.astra.domain.User;
 import org.example.astra.repos.MessageRepo;
 import org.example.astra.repos.UserRepo;
+import org.example.astra.service.MainMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
-
-import java.io.File;
+import javax.validation.Valid;
 import java.io.IOException;
 import java.util.Map;
-import java.util.UUID;
 
 @Controller
 public class MainController {
     @Autowired MessageRepo messageRepo;
     @Autowired UserRepo userRepo;
+    @Autowired MainMessageService mainMessageService;
 
-    @Value("${upload.path}")   // берёт значения из properties
-    private String uploadPath;
 
     @GetMapping("/")
-    public String greeting(Map<String, Object> model) {
+    public String greeting() {
         return "redirect:/main";
     }
 
     @GetMapping("/main")
     public String main(@RequestParam(required = false, defaultValue = "") String filter, Model model){
-        Iterable<Message> messages = messageRepo.findAll();
 
-        if (filter != null && !filter.isEmpty() ) {
-            messages = messageRepo.findByTag(filter);
-        }
-        else {
-            messages = messageRepo.findAll();
-        }
-
-        Iterable<User> users = userRepo.findAll();
-        model.addAttribute("users", users);
-
-        model.addAttribute("messages", messages);
+        model.addAttribute("messages", mainMessageService.getMessages(filter));
         model.addAttribute("filter", filter);
         return "main";
     }
@@ -55,42 +42,31 @@ public class MainController {
     @PostMapping("/main")
     public String add(
             @AuthenticationPrincipal User user,
-            @RequestParam String text,
-            @RequestParam String tag,
+            @Valid Message message,
+            BindingResult bindingResult, //список ошибок и аргументов валидации, должен быть перед model
+            Model model,
             @RequestParam(required = false, defaultValue = "") String filter,
-            @RequestParam("file") MultipartFile file,
-            Model model) throws IOException {
-        Message message = new Message(text, tag, user);
+            @RequestParam("file") MultipartFile file)
+            throws IOException {
+        message.setAuthor(user);
 
-        if(file != null && !file.getOriginalFilename().isEmpty()){
-            File uploadDir = new File(uploadPath);
-
-            if (!uploadDir.exists()){   //проверяем, существует ли uploadPath, если нет, то создаём
-                uploadDir.mkdir();
-            }
-
-            String uuidFile = UUID.randomUUID().toString(); //генерим universe unique id
-            String resultFileName = uuidFile + "." + file.getOriginalFilename(); //конкатенируем с исходным названием
-
-            file.transferTo(new File(uploadPath + "/" + resultFileName));
-            message.setFilename(resultFileName); //и вот конечное имя файла
+        if (bindingResult.hasErrors()){
+            Map<String, String> errorMap = ControllerUtils.getErrors(bindingResult);
+            model.mergeAttributes(errorMap);
+            model.addAttribute("message", message);
+        }
+        else{
+            mainMessageService.sendFilename(message, file);
+            mainMessageService.sendMessage(message);
         }
 
-        messageRepo.save(message);
-
-        Iterable<User> users = userRepo.findAll();
-        model.addAttribute("users", users);
-
-
-        Iterable<Message> messages = messageRepo.findAll();
-        model.addAttribute("messages", messages);
-
+        model.addAttribute("users", userRepo.findAll());
+        model.addAttribute("messages", messageRepo.findAll());
         model.addAttribute("filter", filter);
 
-
-
-        return "main";
+        return "redirect:/main";
     }
+
 
 
 

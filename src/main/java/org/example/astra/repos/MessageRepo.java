@@ -9,5 +9,7 @@ public interface MessageRepo extends CrudRepository<Message, Integer> {
 
     List<Message> findByTag(String text);
 
+    List<Message> findAll();
+
 
 }

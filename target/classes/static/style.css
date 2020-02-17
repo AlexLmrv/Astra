@@ -1,3 +1,18 @@
+@import url(grids.css);
+@import url(message.css);
+
 body{
     color: #113333;
+}
+
+
+.userlist__user{
+    margin: 5px;
+    border: antiquewhite 2px;
+}
+.userlist__user_avatar{
+    max-width: 50px;
+    max-height: 50px;
+    border-radius: 50%;
+    border: #113333 5px;
 }

@@ -1,6 +1,10 @@
 package org.example.astra.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 public class Message {
@@ -8,7 +12,10 @@ public class Message {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer id;
+    private Long id;
+
+    @NotBlank(message = "Сперва введите сообщение:")
+    @Length(max = 2048, message = "Сообщение слишком длинное")
     private String text;
     private String tag;
 
@@ -33,11 +40,11 @@ public class Message {
         return author != null ? author.getUsername() : "<none>";
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
