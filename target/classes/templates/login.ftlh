@@ -2,6 +2,8 @@
 <#import "parts/login.ftlh" as log>
 
 <@comm.page>
+    <div style="padding: 10px ">
+
     <p>
         Залогиньтесь или зарегистрируйтесь
     </p>
@@ -16,5 +18,5 @@
     </div>
 </#if>
     <@log.login "/login" false/>
-
+    </div>
 </@comm.page>
