@@ -40,7 +40,7 @@
                 <div class="form-group">
                     <div class="custom-file">
                         <input type="file" name="file" id="customFile">
-                        <label class="custom-file-label" for="customFile">Прикрепить изображение</label>
+                        <label class="custom-file-label" for="customFile">Прикрепить файл</label>
 
                     </div>
                 </div>
@@ -96,7 +96,7 @@
     </div>
 
     <div class="menu">
-        <div class="list-group">
+        <div class="list-group" style="background-color: #00BFFF">
             <a href="/dialogs" class="list-group-item list-group-item-action active">
                 Диалоги</a>
             <#list users as user>

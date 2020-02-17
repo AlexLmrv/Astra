@@ -1,7 +1,10 @@
 <#include "security.ftlh">
 <#import "login.ftlh" as log>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light " style="
+background-image: linear-gradient(15deg, #32CD32 0%, #98FF98 100%);
+box-shadow: inset 5px 0px 10px 10px rgba(202,255,182,0.4);
+">
     <a class="navbar-brand" href="/">Astra</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
